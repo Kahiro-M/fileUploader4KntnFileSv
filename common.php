@@ -52,5 +52,41 @@ function getKintoneFields() {
     return $fields;
 }
 
+// kintoneレコード追加
+function addRecordToKintone($appId, $record, $apiToken) {
+    $url = "https://" . KINTONE_SUBDOMAIN . ".cybozu.com/k/v1/record.json";
+
+    $headers = [
+        "X-Cybozu-API-Token: {$apiToken}",
+        "Content-Type: application/json"
+    ];
+
+    $data = [
+        "app" => $appId,
+        "record" => $record
+    ];
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        throw new Exception("cURL Error: " . curl_error($ch));
+    }
+
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200) {
+        throw new Exception("kintone API error: " . $response);
+    }
+
+    return json_decode($response, true);
+}
+
+
 
 ?>

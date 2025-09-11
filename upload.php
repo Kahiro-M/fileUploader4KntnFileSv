@@ -130,6 +130,27 @@ fputcsv($fp2, $row);
 fclose($fp2);
 echo("kintoneアップロード用のCSV（BOM付き）を生成しました:<br>");
 
+
+// $header と $row から kintone用の record 配列を組み立て
+$record = [];
+foreach ($header as $i => $fieldCode) {
+    $value = $row[$i] ?? "";
+
+    // 複数選択（チェックボックスなど）の場合はカンマ区切りで入力されているなら配列に変換
+    if (strpos($value, ",") !== false) {
+        $record[$fieldCode] = [ "value" => explode(",", $value) ];
+    } else {
+        $record[$fieldCode] = [ "value" => $value ];
+    }
+}
+
+try {
+    $result = addRecordToKintone(KINTONE_APP_ID, $record, KINTONE_API_TOKEN);
+    echo "<br>登録成功: recordId=" . $result["id"];
+} catch (Exception $e) {
+    echo "<br>登録エラー: " . $e->getMessage();
+}
+
 echo "✅ アップロード成功<br>";
 echo basename($csvFileNoBOM) . "<br>";
 echo basename($csvFileBOM) . "<br>";
