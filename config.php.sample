@@ -1,0 +1,43 @@
+<?php
+// kintone接続設定
+define('KINTONE_SUBDOMAIN', 'your-subdomain'); // 例: "example"
+define('KINTONE_APP_ID', 123);                 // アプリID
+define('KINTONE_API_TOKEN', 'xxxxxxxx');       // APIトークン
+
+// アップロード先フォルダ（絶対パス推奨）
+define('UPLOAD_DIR', __DIR__ . '/uploads');
+define('UPLOAD_DIR_PUBLIC', __DIR__ . '/pub');
+define('UPLOAD_DIR_ORIGINAL', __DIR__ . '/org');
+
+// 除外フィールドタイプ・フィールドコード
+define('EXCLUDE_TYPE', [
+    'RECORD_NUMBER',
+    'CREATOR',
+    'CREATED_TIME',
+    'MODIFIER',
+    'UPDATED_TIME',
+    'STATUS',
+    'STATUS_ASSIGNEE',
+    'CATEGORY',
+]);
+
+define('EXCLUDE_FIELD_CODE', [
+    'レコード番号',
+    '作成者',
+    '作成日時',
+    '更新者',
+    '更新日時',
+    'ステータス',
+    '作業者',
+    'カテゴリー',
+    '公開URL',  // ファイル識別子とアップロードサーバのURLから自動計算
+    '原本URL',  // ファイル識別子とアップロードサーバのURLから自動計算
+]);
+
+// ファイルアップロード時の非表示フィールドコード
+define('HIDE_FIELD_CODE', [
+    'ファイル識別子',      // アップロード時のUUID
+]);
+
+// kintoneフィールドコード（ファイル識別子フィールド）
+define('FILE_UUID_FIELD_CODE', 'ファイル識別子');
