@@ -7,7 +7,8 @@ require_once "common.php";
 if (!isset($_POST['token'], $_SESSION['token']) || $_POST['token'] !== $_SESSION['token']) {
     die("不正なリクエストです。");
 }
-// unset($_SESSION['token']);
+unset($_SESSION['token']);
+
 // === アップロード先フォルダ確認 ===
 if (!is_dir(UPLOAD_DIR)) {
     die("アップロード先フォルダが存在しません: " . UPLOAD_DIR);
