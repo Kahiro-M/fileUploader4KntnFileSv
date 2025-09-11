@@ -5,7 +5,8 @@ define('KINTONE_APP_ID', 123);                 // アプリID
 define('KINTONE_API_TOKEN', 'xxxxxxxx');       // APIトークン
 
 // アップロード先フォルダ（絶対パス推奨）
-define('UPLOAD_DIR', __DIR__ . '/uploads');
+define('UPLOAD_DIR_CSV', __DIR__ . '/uploads');
+define('UPLOAD_DIR_CSV_BOM', __DIR__ . '/uploads/bom');
 define('UPLOAD_DIR_PUBLIC', __DIR__ . '/pub');
 define('UPLOAD_DIR_ORIGINAL', __DIR__ . '/org');
 

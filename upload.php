@@ -10,12 +10,21 @@ if (!isset($_POST['token'], $_SESSION['token']) || $_POST['token'] !== $_SESSION
 unset($_SESSION['token']);
 
 // === アップロード先フォルダ確認 ===
-if (!is_dir(UPLOAD_DIR)) {
-    die("アップロード先フォルダが存在しません: " . UPLOAD_DIR);
+if (!is_dir(UPLOAD_DIR_CSV)) {
+    echo("アップロード先フォルダが存在しません: " . UPLOAD_DIR_CSV);
 }
-if (!is_writable(UPLOAD_DIR)) {
-    die("アップロード先フォルダに書き込み権限がありません: " . UPLOAD_DIR);
+if (!is_writable(UPLOAD_DIR_CSV)) {
+    die("アップロード先フォルダに書き込み権限がありません: " . UPLOAD_DIR_CSV);
 }
+if (!is_dir(UPLOAD_DIR_CSV_BOM)) {
+    echo("アップロード先フォルダが存在しません: " . UPLOAD_DIR_CSV_BOM);
+}
+if (!is_writable(UPLOAD_DIR_CSV_BOM)) {
+    die("アップロード先フォルダに書き込み権限がありません: " . UPLOAD_DIR_CSV_BOM);
+}
+
+$uploadDirCsv = UPLOAD_DIR_CSV;
+$uploadDirCsvBom = UPLOAD_DIR_CSV_BOM;
 
 // UUIDv4生成
 function generateUuidV4(): string {
@@ -28,17 +37,13 @@ function generateUuidV4(): string {
 // kintoneフィールド情報取得
 $fields = getKintoneFields();
 
-// アップロード先フォルダ確認・作成
-$uploadDir = UPLOAD_DIR;
-if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-
 // ファイル名生成
 $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 $timestamp = date("Ymd_His");
 $uuid = generateUuidV4();
 echo("ファイル識別子 (UUIDv4): " . $uuid . "<br>");
-$csvFileNoBOM = $uploadDir . "/files_{$timestamp}_{$ip}_{$uuid}.csv";
-$csvFileBOM   = $uploadDir . "/files_{$timestamp}_{$ip}_{$uuid}_bom.csv";
+$csvFileNoBOM = $uploadDirCsv . "/files_{$timestamp}_{$ip}_{$uuid}.csv";
+$csvFileBOM   = $uploadDirCsvBom . "/files_{$timestamp}_{$ip}_{$uuid}_bom.csv";
 
 // CSVデータ構築
 $header = [];
@@ -59,7 +64,7 @@ foreach ($fields as $f) {
         if (isset($_FILES[$f['code']]) && $_FILES[$f['code']]['error'] === UPLOAD_ERR_OK) {
             $ext = pathinfo($_FILES[$f['code']]['name'], PATHINFO_EXTENSION);
             $newName = uniqid("file_", true) . "." . $ext;
-            move_uploaded_file($_FILES[$f['code']]['tmp_name'], $uploadDir . $newName);
+            move_uploaded_file($_FILES[$f['code']]['tmp_name'], $uploadDirCsv . $newName);
             $row[] = $newName;
         } else {
             $row[] = "";
