@@ -9,7 +9,9 @@ if (empty($_SESSION['token'])) {
 }
 
 // kintoneフィールド情報取得
-$fields = getKintoneFields();
+$fieldsOrgOrder = getKintoneFields();
+$fields = changeFieldOrder($fieldsOrgOrder);
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">

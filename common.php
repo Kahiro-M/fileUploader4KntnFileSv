@@ -88,6 +88,34 @@ function addRecordToKintone($appId, $record, $apiToken) {
     return json_decode($response, true);
 }
 
+// フィールド表示順序の調整
+function changeFieldOrder($fields){
+    // 優先フィールドを先頭に移動
+    if (!empty(FIELD_CODE_DISPLAY_ORDER)) {
+        $reordered = [];
+
+        // 優先フィールドを先に追加（存在する場合のみ）
+        foreach (FIELD_CODE_DISPLAY_ORDER as $code) {
+            foreach ($fields as $f) {
+                if ($f['code'] === $code) {
+                    $reordered[] = $f;
+                    break;
+                }
+            }
+        }
+
+        // 残りのフィールドを順序維持で追加
+        foreach ($fields as $f) {
+            if (!in_array($f['code'], FIELD_CODE_DISPLAY_ORDER, true)) {
+                $reordered[] = $f;
+            }
+        }
+
+        // 最終的な表示用の並び替え結果を $fields に反映
+        $fields = $reordered;
+    }
+    return $fields;
+}
 
 
 ?>

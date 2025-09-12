@@ -42,3 +42,12 @@ define('HIDE_FIELD_CODE', [
 
 // kintoneフィールドコード（ファイル識別子フィールド）
 define('FILE_UUID_FIELD_CODE', 'ファイル識別子');
+
+// フォーム表示のフィールドコード順序
+define('FIELD_CODE_DISPLAY_ORDER', [
+    '分類',
+    'タイトル',
+    '概要',
+    '説明',
+    '備考',
+]);
