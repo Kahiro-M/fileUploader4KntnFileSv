@@ -44,6 +44,7 @@ function getKintoneFields() {
                 'code'    => $f['code'],
                 'label'   => $f['label'],
                 'type'    => $f['type'],
+                'required'=> $f['required'],
                 'options' => $f['options'] ?? [],
                 'hide'    => in_array($f['code'], HIDE_FIELD_CODE, true)
             ];

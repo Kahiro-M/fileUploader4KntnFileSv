@@ -1,0 +1,19 @@
+.field {
+  display: flex;
+}
+
+.field li {
+  display: block;
+}
+
+.field .field-label {
+  display: block;
+  width: 150px;
+  text-align: right;
+  margin-right: 5px;
+}
+
+.field .field-content {
+  display: block;
+  margin-left: 5px;
+}
