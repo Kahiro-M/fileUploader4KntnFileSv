@@ -54,7 +54,7 @@ function getKintoneFields() {
 }
 
 // kintoneレコード追加
-function addRecordToKintone($appId, $record, $apiToken) {
+function addKintoneRecord($appId=KINTONE_APP_ID, $record, $apiToken=KINTONE_API_TOKEN) {
     $url = "https://" . KINTONE_SUBDOMAIN . ".cybozu.com/k/v1/record.json";
 
     $headers = [
@@ -72,6 +72,44 @@ function addRecordToKintone($appId, $record, $apiToken) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        throw new Exception("cURL Error: " . curl_error($ch));
+    }
+
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200) {
+        throw new Exception("kintone API error: " . $response);
+    }
+
+    return json_decode($response, true);
+}
+
+// kintoneレコード検索
+function getKintoneRecord($apiToken=KINTONE_API_TOKEN, $appId=KINTONE_APP_ID, $fieldCode=FILE_UUID_FIELD_CODE, $fieldData) {
+    $urlBase = "https://" . KINTONE_SUBDOMAIN . ".cybozu.com/k/v1/records.json";
+
+    $headers = [
+        "X-Cybozu-API-Token: {$apiToken}",
+    ];
+
+    // 検索条件をkintoneクエリで指定
+    $query = $fieldCode.' = "' . $fieldData . '"';
+    $params = [
+        "app" => $appId,
+        "query" => $query
+    ];
+
+    // URLエンコードしてクエリパラメータを構築
+    $url = $urlBase . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
     $response = curl_exec($ch);
 
     if ($response === false) {

@@ -145,7 +145,7 @@ foreach ($header as $i => $fieldCode) {
 }
 
 try {
-    $result = addRecordToKintone(KINTONE_APP_ID, $record, KINTONE_API_TOKEN);
+    $result = addKintoneRecord(KINTONE_APP_ID, $record, KINTONE_API_TOKEN);
     echo "<br>登録成功: recordId=" . $result["id"];
 } catch (Exception $e) {
     echo "<br>登録エラー: " . $e->getMessage();
