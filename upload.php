@@ -41,7 +41,7 @@ $fields = getKintoneFields();
 $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 $timestamp = date("Ymd_His");
 $uuid = generateUuidV4();
-echo("ファイル識別子 (UUIDv4): " . $uuid . "<br>");
+echo("<div class='dbg-msg' style='display:none;'>ファイル識別子 (UUIDv4): " . $uuid . "</div>");
 $csvFileNoBOM = $uploadDirCsv . "/files_{$timestamp}_{$ip}_{$uuid}.csv";
 $csvFileBOM   = $uploadDirCsvBom . "/files_{$timestamp}_{$ip}_{$uuid}_bom.csv";
 
@@ -93,7 +93,7 @@ if (isset($_FILES['public_file']) && $_FILES['public_file']['error'] === UPLOAD_
     $targetPath = UPLOAD_DIR_PUBLIC . '/' . $filename;
 
     if(move_uploaded_file($_FILES['public_file']['tmp_name'], $targetPath)) {
-        echo('公開用ファイルを保存しました。<br>');
+        echo('<div class="dbg-msg" style="display:none;">公開用ファイルを保存しました。</div>');
     }else{
         die('公開用ファイルの保存に失敗しました<br>');
     }
@@ -107,7 +107,7 @@ if (isset($_FILES['original_file']) && $_FILES['original_file']['error'] === UPL
     $targetPath = UPLOAD_DIR_ORIGINAL . '/' . $filename;
 
     if(move_uploaded_file($_FILES['original_file']['tmp_name'], $targetPath)) {
-        echo('原本ファイルを保存しました。<br>');
+        echo('<div class="dbg-msg" style="display:none;">原本ファイルを保存しました。</div>');
     }else{
         die('原本ファイルの保存に失敗しました<br>');
     }
@@ -120,7 +120,7 @@ $fp1 = fopen($csvFileNoBOM, 'w');
 fputcsv($fp1, $header);
 fputcsv($fp1, $row);
 fclose($fp1);
-echo("kintoneアップロード用のCSVを生成しました:<br>");
+echo("<div class='dbg-msg' style='display:none;'>kintoneアップロード用のCSVを生成しました:</div>");
 
 // CSV出力（BOMあり）
 $fp2 = fopen($csvFileBOM, 'w');
@@ -128,7 +128,7 @@ fwrite($fp2, "\xEF\xBB\xBF");
 fputcsv($fp2, $header);
 fputcsv($fp2, $row);
 fclose($fp2);
-echo("kintoneアップロード用のCSV（BOM付き）を生成しました:<br>");
+echo("<div class='dbg-msg' style='display:none;'>kintoneアップロード用のCSV（BOM付き）を生成しました:</div>");
 
 
 // $header と $row から kintone用の record 配列を組み立て
@@ -146,13 +146,17 @@ foreach ($header as $i => $fieldCode) {
 
 try {
     $result = addKintoneRecord(KINTONE_APP_ID, $record, KINTONE_API_TOKEN);
-    echo "<br>登録成功: recordId=" . $result["id"];
+    echo "<div class='dbg-msg' style='display:none;'>登録成功: recordId=" . $result["id"]. "</div>";
 } catch (Exception $e) {
-    echo "<br>登録エラー: " . $e->getMessage();
+    echo "<h1>登録エラー: " . $e->getMessage()."</h1>";
+    echo "<h2>再度ファイル登録を行ってください。<br>何度も発生する場合はこの画面のスクリーンショットを撮影して、システム担当者へ連絡してください。</h2>";
+    echo "<style>.dbg-msg { display:block!important; }</style>";
+    echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');
+    exit();
 }
 
-echo "✅ アップロード成功<br>";
-echo basename($csvFileNoBOM) . "<br>";
-echo basename($csvFileBOM) . "<br>";
+echo "<h1>✅ アップロード成功</h1>";
+echo("<div class='dbg-msg' style='display:none;'>".basename($csvFileNoBOM) . "</div>");
+echo("<div class='dbg-msg' style='display:none;'>".basename($csvFileBOM) . "</div>");
 
-echo('<p><a href="form.php">ファイル登録画面へ戻る</a></p>');
+echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');
