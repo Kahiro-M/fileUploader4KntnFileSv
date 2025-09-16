@@ -5,10 +5,12 @@ define('KINTONE_APP_ID', 123);                 // アプリID
 define('KINTONE_API_TOKEN', 'xxxxxxxx');       // APIトークン
 
 // アップロード先フォルダ（絶対パス推奨）
-define('UPLOAD_DIR_CSV', __DIR__ . '/uploads');
-define('UPLOAD_DIR_CSV_BOM', __DIR__ . '/uploads/bom');
-define('UPLOAD_DIR_PUBLIC', __DIR__ . '/pub');
-define('UPLOAD_DIR_ORIGINAL', __DIR__ . '/org');
+define('UPLOAD_DIR_CSV', '/path/to/uploads');
+define('UPLOAD_DIR_CSV_BOM', '/path/to/uploads/bom');
+define('RELATIVE_DIR_PUBLIC', '/../../pub');
+define('RELATIVE_DIR_ORIGINAL', '/../../org');
+define('UPLOAD_DIR_PUBLIC', '/path/to/pub');
+define('UPLOAD_DIR_ORIGINAL', '/path/to/org');
 
 // 除外フィールドタイプ・フィールドコード
 define('EXCLUDE_TYPE', [
@@ -20,6 +22,7 @@ define('EXCLUDE_TYPE', [
     'STATUS',
     'STATUS_ASSIGNEE',
     'CATEGORY',
+    'GROUP',
 ]);
 
 define('EXCLUDE_FIELD_CODE', [

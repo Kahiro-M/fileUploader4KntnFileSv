@@ -26,7 +26,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
 
     <ul class="field">
       <li class="field-label">
-        <label for="public_file">公開用ファイル</label><font color="red">*</font>
+        <label for="public_file">公開用ファイル</label><font color="red">*</font> :
       </li>
       <li class="field-content">
         <input type="file" name="public_file" required>
@@ -34,7 +34,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
     </ul>
     <ul class="field">
       <li class="field-label">
-        <label for="original_file">原本</label>
+        <label for="original_file">原本</label> :
       </li>
       <li class="field-content">
         <input type="file" name="original_file">
@@ -50,8 +50,8 @@ $fields = changeFieldOrder($fieldsOrgOrder);
           <?= htmlspecialchars($f['label']) ?>
           <?php if ($f['required'] === TRUE){ ?><font color="red">*</font><?php } ?>
           <span style="display:none;">(<?= $f['code'] ?>)</span>
-          :
         </li>
+        :
         <?php } ?>
 
         <li class="field-content">
@@ -61,11 +61,14 @@ $fields = changeFieldOrder($fieldsOrgOrder);
           <?php elseif ($f['type'] === 'FILE'): ?>
             <input type="file" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
 
+          <?php elseif ($f['type'] === 'DATE'): ?>
+            <input type="date" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+
           <?php elseif ($f['type'] === 'MULTI_LINE_TEXT'): ?>
             <textarea name="<?= $f['code'] ?>" rows="4" cols="40" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>></textarea>
 
           <?php elseif ($f['type'] === 'RADIO_BUTTON'): ?>
-            <?php foreach ($f['options'] as $optCode => $opt): ?>
+            <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
               <label>
                 <input type="radio" name="<?= $f['code'] ?>" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
                 <?= htmlspecialchars($opt['label']) ?>
@@ -74,13 +77,13 @@ $fields = changeFieldOrder($fieldsOrgOrder);
 
           <?php elseif ($f['type'] === 'DROP_DOWN'): ?>
             <select name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
-              <?php foreach ($f['options'] as $optCode => $opt): ?>
+              <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
                 <option value="<?= htmlspecialchars($optCode) ?>"><?= htmlspecialchars($opt['label']) ?></option>
               <?php endforeach; ?>
             </select>
 
           <?php elseif ($f['type'] === 'CHECK_BOX' || $f['type'] === 'MULTI_SELECT'): ?>
-            <?php foreach ($f['options'] as $optCode => $opt): ?>
+            <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
               <label>
                 <input type="checkbox" name="<?= $f['code'] ?>[]" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
                 <?= htmlspecialchars($opt['label']) ?>

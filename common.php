@@ -156,4 +156,17 @@ function changeFieldOrder($fields){
 }
 
 
+// options部分を["label"]で昇順ソート
+function sortByLabel(array $options): array {
+    if (empty($options)) {
+        return $options; // 空配列ならそのまま返す
+    }
+
+    uasort($options, function($a, $b) {
+        return strcmp($a["label"], $b["label"]);
+    });
+
+    return $options; // ソート済み配列を返す
+}
+
 ?>
