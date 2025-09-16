@@ -2,8 +2,15 @@
 require_once "config.php";
 require_once "common.php";
 
-// ダウンロード用ベースディレクトリ
-$baseDir = UPLOAD_DIR_PUBLIC;
+// URLパラメータから公開/原本区分を取得
+$dlMode = $_GET['mode'] ?? '';
+if ($dlMode == 'org') {
+    // 原本ダウンロード用ベースディレクトリ
+    $baseDir = UPLOAD_DIR_ORIGINAL;
+}else{
+    // 公開ダウンロード用ベースディレクトリ
+    $baseDir = UPLOAD_DIR_PUBLIC;
+}
 
 // URLパラメータからUUIDv4を取得
 $uuid = $_GET['file'] ?? '';
@@ -61,7 +68,13 @@ if (count($files) === 1) {
     $filePath = $files[0];
     $ext = pathinfo($filePath, PATHINFO_EXTENSION);
 
-    header("Location: ?file=" . urlencode($uuid) . "&ext=" . urlencode($ext));
+    if ($dlMode == 'org') {
+        // 原本ダウンロード
+        header("Location: ?mode=org&file=" . urlencode($uuid) . "&ext=" . urlencode($ext));
+    }else{
+        // 公開ダウンロード
+        header("Location: ?file=" . urlencode($uuid) . "&ext=" . urlencode($ext));
+    }
     exit;
 }
 
