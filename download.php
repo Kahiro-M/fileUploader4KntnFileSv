@@ -36,8 +36,11 @@ if (isset($_GET['ext'])) {
     // kintoneから該当レコード情報取得
     $record = getKintoneRecord(KINTONE_API_TOKEN, KINTONE_APP_ID, FILE_UUID_FIELD_CODE, $uuid);
     $record = $record['records'][0] ?? null;
-    $fileTitle = $record[FILE_TITLE]['value'] ?? 'unknown';
+
+    // ダウンロードファイル名生成
+    $fileTitle = getDownloadFileName($record);
     
+    // 指定された拡張子のファイルをダウンロード
     $ext = $_GET['ext'];
     $targetFile = $baseDir . '/' . $uuid . '.' . $ext;
 
@@ -53,7 +56,7 @@ if (isset($_GET['ext'])) {
     // ダウンロード用ヘッダー送信
     header('Content-Description: File Transfer');
     header('Content-Type: ' . $mimeType);
-    header('Content-Disposition: attachment; fileName="' . $fileTitle . '_' . $uuid . '.' . $ext . '"');
+    header('Content-Disposition: attachment; fileName="' . $fileTitle . '.' . $ext . '"');
     header('Content-Length: ' . filesize($targetFile));
     header('Cache-Control: must-revalidate');
     header('Pragma: public');
@@ -83,8 +86,8 @@ echo "<h2>対象ファイルダウンロード</h2>";
 // kintoneから該当レコード情報取得
 $record = getKintoneRecord(KINTONE_API_TOKEN, KINTONE_APP_ID, FILE_UUID_FIELD_CODE, $uuid);
 $record = $record['records'][0] ?? null;
-$fileTitle = $record[FILE_TITLE]['value'] ?? 'unknown';
+$fileTitle = getDownloadFileName($record);
 foreach ($files as $filePath) {
     $ext = pathinfo($filePath, PATHINFO_EXTENSION);
-    echo('<a href="'.RELATIVE_DIR_PUBLIC.'/'.$uuid.'.'.$ext.'" download="' . $fileTitle . '_' . $uuid . '.' . $ext . '"> ' . $fileTitle . '.' . $ext . '　ダウンロード </a><br>');
+    echo('<a href="'.RELATIVE_DIR_PUBLIC.'/'.$uuid.'.'.$ext.'" download="' . $fileTitle . '.' . $ext . '"> ' . $fileTitle . '.' . $ext . '　ダウンロード </a><br>');
 }

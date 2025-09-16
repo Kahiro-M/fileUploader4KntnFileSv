@@ -45,7 +45,13 @@ define('HIDE_FIELD_CODE', [
 
 // kintoneフィールドコード（ファイル識別子フィールド）
 define('FILE_UUID_FIELD_CODE', 'ファイル識別子');
-define('FILE_TITLE', 'タイトル');
+// ダウンロードファイル名用フィールドコード
+define('DOWNLOAD_NAME_FIELD_CODE', [
+    'ファイル名',
+    'ファイル識別子',
+]);
+// ダウンロードファイル名の区切り文字
+define('DOWNLOAD_NAME_SPLIT', '_');
 
 // フォーム表示のフィールドコード順序
 define('FIELD_CODE_DISPLAY_ORDER', [

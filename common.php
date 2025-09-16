@@ -169,4 +169,15 @@ function sortByLabel(array $options): array {
     return $options; // ソート済み配列を返す
 }
 
+// ダウンロードファイル名生成
+function getDownloadFileName($record) {
+    $fileTitleParts = [];
+    foreach (DOWNLOAD_NAME_FIELD_CODE as $code) {
+        if (isset($record[$code]) && !empty($record[$code]['value'])) {
+            $fileTitleParts[] = $record[$code]['value'] ?? '';
+        }
+    }
+    return implode(DOWNLOAD_NAME_SPLIT, $fileTitleParts);
+}
+
 ?>
