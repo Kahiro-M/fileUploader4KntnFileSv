@@ -64,6 +64,9 @@ $fields = changeFieldOrder($fieldsOrgOrder);
           <?php elseif ($f['type'] === 'DATE'): ?>
             <input type="date" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
 
+          <?php elseif ($f['type'] === 'DATETIME'): ?>
+            <input type="datetime-local" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+
           <?php elseif ($f['type'] === 'MULTI_LINE_TEXT'): ?>
             <textarea name="<?= $f['code'] ?>" rows="4" cols="40" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>></textarea>
 
