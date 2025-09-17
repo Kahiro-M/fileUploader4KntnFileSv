@@ -73,7 +73,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
           <?php elseif ($f['type'] === 'RADIO_BUTTON'): ?>
             <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
               <label>
-                <input type="radio" name="<?= $f['code'] ?>" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> <?php if ($f['defaultValue'] === htmlspecialchars($optCode)){ echo 'checked'; } ?>>
+                <input type="radio" name="<?= $f['code'] ?>" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> <?php if ($f['defaultValue'] === htmlspecialchars($optCode)){ echo 'checked="true"'; } ?>>
                 <?= htmlspecialchars($opt['label']) ?>
               </label>
             <?php endforeach; ?>
@@ -88,7 +88,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
           <?php elseif ($f['type'] === 'CHECK_BOX' || $f['type'] === 'MULTI_SELECT'): ?>
             <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
               <label>
-                <input type="checkbox" name="<?= $f['code'] ?>[]" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> <?php if ($f['defaultValue'] === htmlspecialchars($optCode)){ echo 'checked'; } ?>>
+                <input type="checkbox" name="<?= $f['code'] ?>[]" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> <?php if ($f['defaultValue'] === htmlspecialchars($optCode)){ echo 'checked="true"'; } ?>>
                 <?= htmlspecialchars($opt['label']) ?>
               </label>
             <?php endforeach; ?>
@@ -104,4 +104,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
     <button type="submit">送信</button>
   </form>
 </body>
+<?php phpToJs(HAS_ORG_FILED_CODE, 'hasOrgFiledCode'); ?>
+<script src="https://js.cybozu.com/jquery/3.7.1/jquery.min.js"></script>
+<script src="./js/form.js"></script>
 </html>

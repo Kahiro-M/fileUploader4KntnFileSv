@@ -46,6 +46,9 @@ define('HIDE_FIELD_CODE', [
     'ファイル識別子',      // アップロード時のUUID
 ]);
 
+// 原本ファイルの存在確認用フィールドコード
+define('HAS_ORG_FILED_CODE', '原本の有無');
+
 // kintoneフィールドコード（ファイル識別子フィールド）
 define('FILE_UUID_FIELD_CODE', 'ファイル識別子');
 // ダウンロードファイル名用フィールドコード

@@ -183,4 +183,10 @@ function getDownloadFileName($record) {
     return implode(DOWNLOAD_NAME_SPLIT, $fileTitleParts);
 }
 
+// PHP変数をJavaScript変数に変換して出力
+function phpToJs($phpVar, $jsVarName) {
+    $json = json_encode($phpVar, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    echo "<script>const {$jsVarName} = {$json};</script>";
+}
+
 ?>
