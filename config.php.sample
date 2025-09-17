@@ -1,4 +1,7 @@
 <?php
+// Debug Mode
+define('DEBUG_MODE',FALSE);
+
 // kintone接続設定
 define('KINTONE_SUBDOMAIN', 'your-subdomain'); // 例: "example"
 define('KINTONE_APP_ID', 123);                 // アプリID

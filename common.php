@@ -1,10 +1,12 @@
 <?php
 // デバッグ用フィールド情報表示
 function dbg_dump($fields, $title = ''){
-    echo("<pre>");
-    echo("[".$title."]\n");
-    var_dump($fields);
-    echo("</pre>");
+    if(defined('DEBUG_MODE') == TRUE && DEBUG_MODE == TRUE){
+        echo("<pre>");
+        echo("[".$title."]\n");
+        var_dump($fields);
+        echo("</pre>");
+    }
 }
 
 // kintoneフィールド情報取得
@@ -41,12 +43,13 @@ function getKintoneFields() {
             && in_array($f['code'], EXCLUDE_FIELD_CODE, true) == FALSE
         ){
             $fields[] = [
-                'code'    => $f['code'],
-                'label'   => $f['label'],
-                'type'    => $f['type'],
-                'required'=> $f['required'],
-                'options' => $f['options'] ?? [],
-                'hide'    => in_array($f['code'], HIDE_FIELD_CODE, true)
+                'code'         => $f['code'],
+                'label'        => $f['label'],
+                'type'         => $f['type'],
+                'required'     => $f['required'],
+                'options'      => $f['options'] ?? [],
+                'defaultValue' => $f['defaultValue'] ?? '',
+                'hide'         => in_array($f['code'], HIDE_FIELD_CODE, true)
             ];
       }
     }

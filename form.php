@@ -29,7 +29,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
         <label for="public_file">公開用ファイル</label><font color="red">*</font> :
       </li>
       <li class="field-content">
-        <input type="file" name="public_file" required>
+        <input type="file" id="public_file" name="public_file" required>
       </li>
     </ul>
     <ul class="field">
@@ -37,7 +37,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
         <label for="original_file">原本</label> :
       </li>
       <li class="field-content">
-        <input type="file" name="original_file">
+        <input type="file" id="original_file" name="original_file">
       </li>
     </ul>
 
@@ -56,24 +56,24 @@ $fields = changeFieldOrder($fieldsOrgOrder);
 
         <li class="field-content">
           <?php if ($f['hide'] === TRUE): ?>
-            <input type="hidden" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+            <input type="hidden" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> value="<?= htmlspecialchars($f['defaultValue']) ?>">
 
           <?php elseif ($f['type'] === 'FILE'): ?>
             <input type="file" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
 
           <?php elseif ($f['type'] === 'DATE'): ?>
-            <input type="date" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+            <input type="date" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> value="<?= htmlspecialchars($f['defaultValue']) ?>">
 
           <?php elseif ($f['type'] === 'DATETIME'): ?>
-            <input type="datetime-local" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+            <input type="datetime-local" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> value="<?= htmlspecialchars($f['defaultValue']) ?>">
 
           <?php elseif ($f['type'] === 'MULTI_LINE_TEXT'): ?>
-            <textarea name="<?= $f['code'] ?>" rows="4" cols="40" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>></textarea>
+            <textarea name="<?= $f['code'] ?>" rows="4" cols="40" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>><?= htmlspecialchars($f['defaultValue']) ?></textarea>
 
           <?php elseif ($f['type'] === 'RADIO_BUTTON'): ?>
             <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
               <label>
-                <input type="radio" name="<?= $f['code'] ?>" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+                <input type="radio" name="<?= $f['code'] ?>" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> <?php if ($f['defaultValue'] === htmlspecialchars($optCode)){ echo 'checked'; } ?>>
                 <?= htmlspecialchars($opt['label']) ?>
               </label>
             <?php endforeach; ?>
@@ -81,20 +81,20 @@ $fields = changeFieldOrder($fieldsOrgOrder);
           <?php elseif ($f['type'] === 'DROP_DOWN'): ?>
             <select name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
               <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
-                <option value="<?= htmlspecialchars($optCode) ?>"><?= htmlspecialchars($opt['label']) ?></option>
+                <option value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['defaultValue'] === htmlspecialchars($optCode)){ echo 'selected'; } ?>><?= htmlspecialchars($opt['label']) ?></option>
               <?php endforeach; ?>
             </select>
 
           <?php elseif ($f['type'] === 'CHECK_BOX' || $f['type'] === 'MULTI_SELECT'): ?>
             <?php foreach (sortByLabel($f['options']) as $optCode => $opt): ?>
               <label>
-                <input type="checkbox" name="<?= $f['code'] ?>[]" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+                <input type="checkbox" name="<?= $f['code'] ?>[]" value="<?= htmlspecialchars($optCode) ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> <?php if ($f['defaultValue'] === htmlspecialchars($optCode)){ echo 'checked'; } ?>>
                 <?= htmlspecialchars($opt['label']) ?>
               </label>
             <?php endforeach; ?>
 
           <?php else: ?>
-            <input type="text" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?>>
+            <input type="text" name="<?= $f['code'] ?>" <?php if ($f['required'] === TRUE){ echo 'required'; } ?> value="<?= htmlspecialchars($f['defaultValue']) ?>">
           <?php endif; ?>
         </li>
       </ul>
