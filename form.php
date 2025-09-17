@@ -19,6 +19,8 @@ $fields = changeFieldOrder($fieldsOrgOrder);
   <meta charset="UTF-8">
   <title>kintone連携 | ファイルアップロードフォーム</title>
   <link rel="stylesheet" href="./css/form.css">
+  <?php phpToJs(EXIST_ORG_FILED_CODE, 'hasOrgFiledCode'); ?>
+  <?php phpToJs(getKintoneFieldType($fields,EXIST_ORG_FILED_CODE), 'hasOrgFiledType'); ?>
 </head>
   <body>
   <h2>kintone連携 ファイルアップロードフォーム</h2>
@@ -104,8 +106,6 @@ $fields = changeFieldOrder($fieldsOrgOrder);
     <button type="submit">送信</button>
   </form>
 </body>
-<?php phpToJs(HAS_ORG_FILED_CODE, 'hasOrgFiledCode'); ?>
-<?php phpToJs(HAS_ORG_FILED_TYPE, 'hasOrgFiledType'); ?>
 <script src="https://js.cybozu.com/jquery/3.7.1/jquery.min.js"></script>
 <script src="./js/form.js"></script>
 </html>

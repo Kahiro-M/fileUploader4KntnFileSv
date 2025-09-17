@@ -47,9 +47,7 @@ define('HIDE_FIELD_CODE', [
 ]);
 
 // 原本ファイルの存在確認用フィールドコード
-define('HAS_ORG_FILED_CODE', '原本の有無');
-// 原本の有無フィールドタイプ
-define('HAS_ORG_FILED_TYPE', 'DROP_DOWN'); // DROP_DOWN, RADIO_BUTTON
+define('EXIST_ORG_FILED_CODE', '原本の有無');
 
 // kintoneフィールドコード（ファイル識別子フィールド）
 define('FILE_UUID_FIELD_CODE', 'ファイル識別子');

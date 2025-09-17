@@ -42,7 +42,7 @@ function getKintoneFields() {
             in_array($f['type'], EXCLUDE_TYPE, true) == FALSE
             && in_array($f['code'], EXCLUDE_FIELD_CODE, true) == FALSE
         ){
-            $fields[] = [
+            $fields[$f['label']] = [
                 'code'         => $f['code'],
                 'label'        => $f['label'],
                 'type'         => $f['type'],
@@ -54,6 +54,20 @@ function getKintoneFields() {
       }
     }
     return $fields;
+}
+
+// getKintoneFields()の返り値から特定フィールドのtypeを取得
+function getKintoneFieldType($fieldList,$code){
+    if(isset($fieldList[$code])){  // getKintoneFields()の返り値の配列から特定フィールドのtypeを取得
+        return $fieldList[$code]['type'] ?? null;
+    }else{  // getKintoneFields()の返り値の配列の要素から特定フィールドのtypeを取得
+        foreach($fieldList as $field){
+            if($field['code'] === $code){
+                return $field['type'] ?? null;
+            }
+        }
+        return null;
+    }
 }
 
 // kintoneレコード追加
@@ -139,7 +153,7 @@ function changeFieldOrder($fields){
         foreach (FIELD_CODE_DISPLAY_ORDER as $code) {
             foreach ($fields as $f) {
                 if ($f['code'] === $code) {
-                    $reordered[] = $f;
+                    $reordered[$code] = $f;
                     break;
                 }
             }
