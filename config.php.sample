@@ -49,6 +49,13 @@ define('HIDE_FIELD_CODE', [
 // 原本ファイルの存在確認用フィールドコード
 define('EXIST_ORG_FILED_CODE', '原本の有無');
 
+// 死活用フィールドコード
+define('IS_DISABLE_FILED_CODE', [
+    '死活' => [
+        '無効',
+    ],
+]);
+
 // kintoneフィールドコード（ファイル識別子フィールド）
 define('FILE_UUID_FIELD_CODE', 'ファイル識別子');
 // ダウンロードファイル名用フィールドコード
