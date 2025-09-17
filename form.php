@@ -28,7 +28,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
 
     <ul class="field">
       <li class="field-label">
-        <label for="public_file">公開用ファイル</label><font color="red">*</font> :
+        <label class="field-label-text" for="public_file">公開用ファイル</label><span class="req-text">*</span> :
       </li>
       <li class="field-content">
         <input type="file" id="public_file" name="public_file" required>
@@ -36,7 +36,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
     </ul>
     <ul class="field">
       <li class="field-label">
-        <label for="original_file">原本</label> :
+        <label class="field-label-text" for="original_file">原本</label> :
       </li>
       <li class="field-content">
         <input type="file" id="original_file" name="original_file">
@@ -49,9 +49,9 @@ $fields = changeFieldOrder($fieldsOrgOrder);
       <ul class="field">
         <?php if($f['hide'] === FALSE){ ?>
         <li class="field-label">
-          <?= htmlspecialchars($f['label']) ?>
-          <?php if ($f['required'] === TRUE){ ?><font color="red">*</font><?php } ?>
-          <span style="display:none;">(<?= $f['code'] ?>)</span>
+          <span class="field-label-text"><?= htmlspecialchars($f['label']) ?></span>
+          <?php if ($f['required'] === TRUE){ ?><span class="req-text">*</span><?php } ?>
+          <span class="field-code">(<?= $f['code'] ?>)</span>
         </li>
         :
         <?php } ?>

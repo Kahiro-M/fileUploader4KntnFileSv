@@ -1,4 +1,10 @@
 $(function(){
+    // フィールドラベルにカッコがある場合は改行（見た目調整）
+    $('.field-label-text').each(function(){
+        const oldTxt = $(this).text();
+        const newTxt = oldTxt.replace('(','<br>(');
+        $(this).html(newTxt);
+    })
     // 原本ファイルによって原本有無を自動切り替え
     $('#original_file').on('change', function(){
         if(hasOrgFiledType == 'RADIO_BUTTON'){

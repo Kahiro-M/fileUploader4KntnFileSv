@@ -1,3 +1,17 @@
+.req-text {
+  color: red;
+  font-weight: bold;
+}
+
+.field-code {
+  display: none;
+}
+
+.field-label-text {
+  display: contents;
+  font-weight: 700;
+}
+
 .field {
   display: flex;
 }
