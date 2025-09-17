@@ -17,6 +17,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
   <title>kintone連携 | ファイルアップロードフォーム</title>
   <link rel="stylesheet" href="./css/form.css">
   <?php phpToJs(EXIST_ORG_FILED_CODE, 'hasOrgFiledCode'); ?>
