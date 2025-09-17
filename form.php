@@ -105,6 +105,7 @@ $fields = changeFieldOrder($fieldsOrgOrder);
   </form>
 </body>
 <?php phpToJs(HAS_ORG_FILED_CODE, 'hasOrgFiledCode'); ?>
+<?php phpToJs(HAS_ORG_FILED_TYPE, 'hasOrgFiledType'); ?>
 <script src="https://js.cybozu.com/jquery/3.7.1/jquery.min.js"></script>
 <script src="./js/form.js"></script>
 </html>
