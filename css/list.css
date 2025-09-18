@@ -1,0 +1,65 @@
+.table-container {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0 8px; /* 行ごとの余白 */
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.modern-table thead th {
+  position: sticky;
+  top: 0px;                  /* スクロール時に上に張り付く */
+  background: #465b80; /* 濃い背景 */
+  color: #fff;
+  text-align: left;
+  padding: 5px 6px;
+  border-radius: 6px 6px 0 0;
+  white-space: nowrap;
+  border-right: 1px solid #FFF;
+}
+
+.modern-table tbody tr {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: all 0.2s ease-in-out;
+}
+
+.modern-table tbody tr:hover {
+  background: #eef4f8;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+}
+
+.modern-table td {
+  padding: 5px 6px;
+  border-top: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.modern-table a {
+  color: #3182ce;
+  text-decoration: none;
+  font-weight: 500;
+}
+.modern-table a:hover {
+  text-decoration: underline;
+}
+
+/* 列ごとに幅やスタイルを調整 */
+.col-has-original { width: 80px; }
+.col-category { width: 120px; }
+.col-filename { width: 160px; }
+.col-published { width: 100px; }
+.col-genre { width: 140px; }
+.col-date { width: 100px; }
+.col-author { width: 150px; }
+.col-summary, .col-description, .col-notes { min-width: 180px; }
+.col-url { min-width: 120px; }
+

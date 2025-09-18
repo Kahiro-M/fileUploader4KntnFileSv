@@ -10,7 +10,7 @@ if (empty($_SESSION['token'])) {
 
 // kintoneフィールド情報取得
 $fieldsOrgOrder = getKintoneFields();
-$fields = changeFieldOrder($fieldsOrgOrder);
+$fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
 
 ?>
 <!DOCTYPE html>
