@@ -64,7 +64,14 @@ foreach ($data as $row) {
                 }
             }
         }
-        echo('<td class="VAL_'.$row[$fieldCode]['type'].'">' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '</td>');
+        $outValue = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        $url = $outValue;
+        $parts = parse_url($url);
+        if (isset($parts['scheme'], $parts['host'], $parts['path'], $parts['query'])) {
+            echo('<td class="VAL_'.$row[$fieldCode]['type'].'"><a href="' . $outValue . '" target="_blank">' . $outValue . '</a></td>');
+        }else{
+            echo('<td class="VAL_'.$row[$fieldCode]['type'].'">' . $outValue . '</td>');
+        }
     }
     echo "</tr>";
 }

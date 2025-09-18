@@ -52,14 +52,29 @@
   text-decoration: underline;
 }
 
-/* 列ごとに幅やスタイルを調整 */
-.col-has-original { width: 80px; }
-.col-category { width: 120px; }
-.col-filename { width: 160px; }
-.col-published { width: 100px; }
-.col-genre { width: 140px; }
-.col-date { width: 100px; }
-.col-author { width: 150px; }
-.col-summary, .col-description, .col-notes { min-width: 180px; }
-.col-url { min-width: 120px; }
+/* フィールドタイプ別のスタイル調整 */
+.COL_DROP_DOWN,
+.VAL_DROP_DOWN{ 
+  white-space: nowrap; 
+}
+.COL_SINGLE_LINE_TEXT,
+.VAL_SINGLE_LINE_TEXT{ 
+  white-space: normal;
+}
+.COL_RADIO_BUTTON,
+.VAL_RADIO_BUTTON{ 
+  white-space: nowrap; 
+}
+.COL_DATE,
+.VAL_DATE{ 
+  white-space: nowrap; 
+}
+.COL_CALC,
+.VAL_CALC{ 
+  white-space: nowrap; 
+}
+.COL_MULTI_LINE_TEXT,
+.VAL_MULTI_LINE_TEXT{ 
+  white-space: normal; 
+}
 
