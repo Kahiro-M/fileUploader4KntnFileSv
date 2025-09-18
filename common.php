@@ -128,7 +128,7 @@ function addKintoneRecord($appId=KINTONE_APP_ID, $record, $apiToken=KINTONE_API_
 }
 
 // kintoneレコード取得
-function getKintoneRecordList($appId=KINTONE_APP_ID, $apiToken=KINTONE_API_TOKEN, $fields=[], $query='', $recordId=1, $limit=500) {
+function getKintoneRecordList($appId=KINTONE_APP_ID, $apiToken=KINTONE_API_TOKEN, $fields=[], $query='', $offset=0, $limit=500) {
     $url = "https://" . KINTONE_SUBDOMAIN . ".cybozu.com/k/v1/records.json";
 
     $headers = [
@@ -141,9 +141,9 @@ function getKintoneRecordList($appId=KINTONE_APP_ID, $apiToken=KINTONE_API_TOKEN
         "totalCount" => "true",
     ];
     if (!empty($query)) {
-        $params["query"] = $query . " limit {$limit} offset " . ($recordId - 1);
+        $params["query"] = $query . " limit {$limit} offset {$offset}";
     } else {
-        $params["query"] = "limit {$limit} offset " . ($recordId - 1);
+        $params["query"] = "limit {$limit} offset {$offset}";
     }
 
     $url .= '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
@@ -179,7 +179,7 @@ function getKintoneAllRecordList($appId=KINTONE_APP_ID, $apiToken=KINTONE_API_TO
             $apiToken,
             $fields,
             $query,
-            $offset + 1,   // recordId引数を offset基準で計算
+            $offset,
             $limit
         );
 

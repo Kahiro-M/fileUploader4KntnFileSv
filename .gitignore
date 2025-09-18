@@ -24,6 +24,7 @@
 /app/Config/database.php
 /vendors/*
 config.php
+config*.php
 
 *.csv
 *.zip

@@ -3,12 +3,12 @@ session_start();
 require_once "config.php";
 require_once "common.php";
 
-// kintoneレコード情報取得
-$records = getKintoneAllRecordList(appId:KINTONE_APP_ID, apiToken:KINTONE_API_TOKEN);
-
 // kintoneフィールド情報取得（表示順序調整用）
 $kntnFields = getKintoneFields('all');
 $fieldCodeList = filterAndSortKintoneFields($kntnFields,SHOW_FIELD_CODE_LIST);
+
+// kintoneレコード情報取得
+$records = getKintoneAllRecordList(appId:KINTONE_APP_ID, apiToken:KINTONE_API_TOKEN, fields:array_keys($fieldCodeList));
 
 ?>
 <!DOCTYPE html>
