@@ -45,6 +45,10 @@ echo("<div class='dbg-msg' style='display:none;'>ファイル識別子 (UUIDv4):
 $csvFileNoBOM = $uploadDirCsv . "/files_{$timestamp}_{$ip}_{$uuid}.csv";
 $csvFileBOM   = $uploadDirCsvBom . "/files_{$timestamp}_{$ip}_{$uuid}_bom.csv";
 
+echo("<div class='dbg-msg' style='display:none;'>POST: ");
+echo(var_dump($_POST));
+echo("</div>");
+
 // CSVデータ構築
 $header = [];
 $row    = [];
@@ -133,15 +137,31 @@ echo("<div class='dbg-msg' style='display:none;'>kintoneアップロード用の
 
 // $header と $row から kintone用の record 配列を組み立て
 $record = [];
+$checkboxBuffer = []; // チェックボックス用バッファ
 foreach ($header as $i => $fieldCode) {
     $value = $row[$i] ?? "";
 
-    // 複数選択（チェックボックスなど）の場合はカンマ区切りで入力されているなら配列に変換
+    // 「フィールドコード[選択肢]」形式を検出
+    if (preg_match('/^(.+?)\[(.+)\]$/u', $fieldCode, $m)) {
+        $baseField = $m[1];   // 例: "本社審査"
+        $option    = $m[2];   // 例: "コンプライアンス"
+
+        if ($value === "1") {
+            $checkboxBuffer[$baseField][] = $option;
+        }
+        continue; // 通常処理には回さない
+    }
+
+    // 通常フィールド処理
     if (strpos($value, ",") !== false) {
         $record[$fieldCode] = [ "value" => explode(",", $value) ];
     } else {
         $record[$fieldCode] = [ "value" => $value ];
     }
+}
+// チェックボックス項目をまとめて追加
+foreach ($checkboxBuffer as $field => $options) {
+    $record[$field] = [ "value" => $options ];
 }
 
 try {
