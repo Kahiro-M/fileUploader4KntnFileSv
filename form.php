@@ -104,7 +104,7 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
     <?php endforeach; ?>
 
     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-    <button type="submit">送信</button>
+    <button type="submit">登録</button>
   </form>
 </body>
 <script src="https://js.cybozu.com/jquery/3.7.1/jquery.min.js"></script>
