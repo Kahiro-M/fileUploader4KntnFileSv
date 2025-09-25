@@ -3,11 +3,57 @@ session_start();
 require_once "config.php";
 require_once "common.php";
 
+$uploadMaxFilesize = ini_get('upload_max_filesize');
+$postMaxSize = ini_get('post_max_size');
+$memoryLimit = ini_get('memory_limit');
+
 // CSRFチェック
 if (!isset($_POST['token'], $_SESSION['token']) || $_POST['token'] !== $_SESSION['token']) {
-    die("不正なリクエストです。");
+    echo("不正なリクエストです。<br>");
+    echo("アップロード画面で再読み込み、もしくは、データ容量が超過した可能性があります。<br>");
+    echo "<h2>再度ファイル登録を行ってください。<br>何度も発生する場合はこの画面のスクリーンショットを撮影して、システム担当者へ連絡してください。</h2>";
+    echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');
+    exit();
 }
 unset($_SESSION['token']);
+
+// ファイルサイズチェック
+$fields = [
+    'public_file'=>'公開用ファイル', 
+    'original_file'=>'原本',
+];
+foreach ($fields as $field=>$label) {
+    if (!isset($_FILES[$field])) {
+        continue; // フィールドが無い場合はスキップ
+    }
+
+    $fileError = $_FILES[$field]['error'];
+    $fileSize  = $_FILES[$field]['size'];
+
+    if ($fileError !== UPLOAD_ERR_OK) {
+        switch ($fileError) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                echo("アップロードされたファイル「{$label}」がサイズ制限({$uploadMaxFilesize})を超えています。<br>");
+                echo("ファイルサイズを縮小して再アップロード、もしくは、管理者へ連絡してください。<br>");
+                echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');
+                exit();
+            case UPLOAD_ERR_PARTIAL:
+                echo("アップロードに失敗しました（途中で中断されました: {$label}）<br>");
+                echo("再アップロードしてください。<br>");
+                echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');
+                exit();
+            case UPLOAD_ERR_NO_FILE:
+                // 未添付ならスキップでOK
+                break;
+            default:
+                echo("不明なアップロードエラーが発生しました（{$label}）<br>");
+                echo("再アップロードしてください。<br>");
+                echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');
+                exit();
+        }
+    }
+}
 
 // === アップロード先フォルダ確認 ===
 if (!is_dir(UPLOAD_DIR_CSV)) {
