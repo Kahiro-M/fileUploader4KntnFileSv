@@ -3,9 +3,9 @@ session_start();
 require_once "config.php";
 require_once "common.php";
 
-$uploadMaxFilesize = ini_get('upload_max_filesize');
-$postMaxSize = ini_get('post_max_size');
-$memoryLimit = ini_get('memory_limit');
+$uploadMaxFilesize = UPLOAD_MAX_FILESIZE;
+$postMaxSize = POST_MAX_SIZE;
+$memoryLimit = MEMORY_LIMIT;
 
 // CSRFチェック
 if (!isset($_POST['token'], $_SESSION['token']) || $_POST['token'] !== $_SESSION['token']) {

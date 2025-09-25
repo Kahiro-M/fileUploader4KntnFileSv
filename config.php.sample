@@ -89,3 +89,23 @@ define('SHOW_FIELD_CODE_LIST', [
 // 各ページタイトルの設定
 define('FORM_TITLE', 'kintone連携 ファイルアップロードフォーム');
 define('LIST_TITLE', 'kintone連携 データ閲覧');
+
+// フォーム画面メッセージ
+define('FORM_MSG_HEADER', <<< 'FORM_MSG_HEADER_STR'
+ヘッダーメッセージはここに表示される。
+FORM_MSG_HEADER_STR
+);
+define('FORM_MSG_FILES', <<< 'FORM_MSG_FILES_STR'
+ファイルメッセージはここに表示される。
+FORM_MSG_FILES_STR
+);
+define('FORM_MSG_FOOTER', <<< 'FORM_MSG_FOOTER_STR'
+フッターメッセージはここに表示される。
+FORM_MSG_FOOTER_STR
+);
+// PHP設定値取得
+define('UPLOAD_MAX_FILESIZE',ini_get('upload_max_filesize'));
+define('POST_MAX_SIZE',ini_get('post_max_size'));
+define('MEMORY_LIMIT',ini_get('memory_limit'));
+
+

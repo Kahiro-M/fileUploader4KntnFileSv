@@ -25,11 +25,12 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
 </head>
   <body>
   <h2><?= FORM_TITLE ?? 'kintone連携 ファイルアップロードフォーム' ?></h2>
+  <?= FORM_MSG_HEADER ?>
   <form action="upload.php" method="post" enctype="multipart/form-data">
 
     <ul class="field">
       <li class="field-label">
-        <label class="field-label-text" for="public_file">公開用ファイル</label><span class="req-text">*</span> :
+        <label class="field-label-text" for="public_file">公開用ファイル(MAX:<?= UPLOAD_MAX_FILESIZE ?>B)</label><span class="req-text">*</span> :
       </li>
       <li class="field-content">
         <input type="file" id="public_file" name="public_file" required>
@@ -37,12 +38,13 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
     </ul>
     <ul class="field">
       <li class="field-label">
-        <label class="field-label-text" for="original_file">原本</label> :
+        <label class="field-label-text" for="original_file">原本(MAX:<?= UPLOAD_MAX_FILESIZE ?>B)</label> :
       </li>
       <li class="field-content">
         <input type="file" id="original_file" name="original_file">
       </li>
     </ul>
+    <?= FORM_MSG_FILES ?>
 
     <hr>
 
@@ -104,6 +106,7 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
     <?php endforeach; ?>
 
     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+    <?= FORM_MSG_FOOTER ?>
     <button type="submit">登録</button>
   </form>
 </body>
