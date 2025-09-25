@@ -16,11 +16,11 @@ $records = getKintoneAllRecordList(appId:KINTONE_APP_ID, apiToken:KINTONE_API_TO
 <head>
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow">
-  <title>kintone連携 | データ閲覧</title>
+  <title><?= LIST_TITLE ?? 'kintone連携 | データ閲覧' ?></title>
   <link rel="stylesheet" href="./css/list.css">
 </head>
   <body>
-  <h2>kintone連携 データ閲覧</h2>
+  <h2><?= LIST_TITLE ?? 'kintone連携 データ閲覧' ?></h2>
 
 <?php
 if (!isset($records['records']) || !is_array($records['records'])) {

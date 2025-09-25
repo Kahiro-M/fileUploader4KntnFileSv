@@ -18,13 +18,13 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
 <head>
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow">
-  <title>kintone連携 | ファイルアップロードフォーム</title>
+  <title><?= FORM_TITLE ?? 'kintone連携 | ファイルアップロードフォーム' ?></title>
   <link rel="stylesheet" href="./css/form.css">
   <?php phpToJs(EXIST_ORG_FILED_CODE, 'hasOrgFiledCode'); ?>
   <?php phpToJs(getKintoneFieldType($fields,EXIST_ORG_FILED_CODE), 'hasOrgFiledType'); ?>
 </head>
   <body>
-  <h2>kintone連携 ファイルアップロードフォーム</h2>
+  <h2><?= FORM_TITLE ?? 'kintone連携 ファイルアップロードフォーム' ?></h2>
   <form action="upload.php" method="post" enctype="multipart/form-data">
 
     <ul class="field">

@@ -85,3 +85,7 @@ define('SHOW_FIELD_CODE_LIST', [
     '公開URL',  // ファイル識別子とアップロードサーバのURLから自動計算
     '原本URL',  // ファイル識別子とアップロードサーバのURLから自動計算
 ]);
+
+// 各ページタイトルの設定
+define('FORM_TITLE', 'kintone連携 ファイルアップロードフォーム');
+define('LIST_TITLE', 'kintone連携 データ閲覧');
