@@ -30,16 +30,18 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
 
     <ul class="field">
       <li class="field-label">
-        <label class="field-label-text" for="public_file">公開用ファイル(MAX:<?= UPLOAD_MAX_FILESIZE ?>B)</label><span class="req-text">*</span> :
+        <label class="field-label-text" for="public_file">公開用ファイル(MAX:<?= UPLOAD_MAX_FILESIZE ?>B)</label><span class="req-text">*</span>
       </li>
+      :
       <li class="field-content">
         <input type="file" id="public_file" name="public_file" required>
       </li>
     </ul>
     <ul class="field">
       <li class="field-label">
-        <label class="field-label-text" for="original_file">原本(MAX:<?= UPLOAD_MAX_FILESIZE ?>B)</label> :
+        <label class="field-label-text" for="original_file">原本(MAX:<?= UPLOAD_MAX_FILESIZE ?>B)</label>
       </li>
+      :
       <li class="field-content">
         <input type="file" id="original_file" name="original_file">
       </li>
