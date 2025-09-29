@@ -6,9 +6,9 @@
 
 ### ユースケース図
 ```mermaid
-flowchart TD
+flowchart LR
     %% アクター
-    USR[ユーザー<br>（ブラウザ利用者）]
+    USR([ユーザー<br>（ブラウザ利用者）])
 
     %% システム
     subgraph S[FileUploaderシステム]
@@ -79,9 +79,9 @@ sequenceDiagram
 ## ファイルダウンロード
 ### ユースケース図
 ```mermaid
-flowchart TD
+flowchart LR
     %% アクター
-    USR[ユーザー<br>（ブラウザ利用者）]
+    USR([ユーザー<br>（ブラウザ利用者）])
 
     %% 外部システム（起点）
     KNTN[kintoneアプリ<br>（レコード詳細画面）]
