@@ -105,6 +105,10 @@ foreach ($fields as $f) {
         $header[] = $f['code'];
         if(strcmp($f['code'], FILE_UUID_FIELD_CODE) == 0){ // ファイル識別子フィールド
             $row[] = $uuid;
+        }elseif(strcmp($f['code'], PUBLIC_FILE_TYPE) == 0){ // ファイル形式フィールド
+            $row[] = $_FILES['public_file']['type'];
+        }elseif(strcmp($f['code'], ORIGINAL_FILE_TYPE) == 0){ // 原本ファイル形式フィールド
+            $row[] = $_FILES['original_file']['type'];
         }else{
             $row[] = htmlspecialchars($_POST[$f['code']] ?? "", ENT_QUOTES, "UTF-8");
         }

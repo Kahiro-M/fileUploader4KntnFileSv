@@ -58,6 +58,8 @@ define('IS_DISABLE_FILED_CODE', [
 
 // kintoneフィールドコード（ファイル識別子フィールド）
 define('FILE_UUID_FIELD_CODE', 'ファイル識別子');
+define('PUBLIC_FILE_TYPE', 'ファイル形式');
+define('ORIGINAL_FILE_TYPE', '原本ファイル形式');
 // ダウンロードファイル名用フィールドコード
 define('DOWNLOAD_NAME_FIELD_CODE', [
     'ファイル名',
