@@ -42,19 +42,27 @@ flowchart TD
 ### シーケンス図
 ```mermaid
 sequenceDiagram
-    participant User as ユーザー（ブラウザ）
+    participant User as ユーザー<br>（ブラウザ）
     participant Form as form.php
     participant Upload as upload.php
     participant Kintone as kintone API
 
     %% ユーザー操作
+    User ->> Form: ページアクセス
+    Form ->> Kintone: REST API /k/v1/app/form/fields.json<br>除外指定（EXCLUDE_FIELD_CODE）以外のフィールド情報取得
+    Kintone -->> Form: レスポンス（フィールド項目情報）
+    Form ->> Form: 表示項目（FIELD_CODE_DISPLAY_ORDER）のみ入力欄を生成
+    Form -->> User: 表示項目のみ入力欄を描画
     User ->> Form: ファイル選択＆送信
     Form ->> Upload: POST /upload.php (multipart/form-data)
 
     %% サーバー側処理
     Upload ->> Upload: ファイル存在確認 ($_FILES['file'])
     Upload ->> Upload: アップロードエラーチェック
-    Upload ->> Upload: UUID生成 & 保存 (move_uploaded_file)
+    Upload ->> Kintone: REST API /k/v1/app/form/fields.json<br>除外指定（EXCLUDE_FIELD_CODE）以外のフィールド情報取得
+    Kintone -->> Upload: レスポンス（フィールド項目情報）
+    Upload ->> Upload: UUID生成
+    Upload ->> Upload: 登録用フィールド情報の生成 & ファイルのサーバ内保存 (move_uploaded_file)
 
     alt 保存成功
         Upload ->> Kintone: REST API /k/v1/record.json<br>ファイル情報をレコード登録
@@ -70,7 +78,7 @@ sequenceDiagram
     end
 
     %% ユーザー側への応答
-    Form -->> User: 結果を表示（成功メッセージ or エラー）
+    Upload -->> User: 結果を表示（成功メッセージ or エラー）
 ```
 
 
