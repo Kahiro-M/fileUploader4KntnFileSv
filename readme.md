@@ -10,8 +10,8 @@ kintone連携 ファイルアップロード
 
 ## 構築方法
 1. kintone上でアプリを作成  
-    サンプルの[アプリテンプレート](https://github.com/Kahiro-M/fileUploader4KntnFileSv/releases/download/v.1.0.0/default.zip)は文書管理を目的としたアプリです。  
-    サンプルの[アプリテンプレート](https://github.com/Kahiro-M/fileUploader4KntnFileSv/releases/download/v.1.0.0/default.zip)を利用した場合は、以下の項目をご利用の環境に合わせて変更してください。
+    サンプルの[アプリテンプレート（default.zip）](https://github.com/Kahiro-M/fileUploader4KntnFileSv/releases/)は文書管理を目的としたアプリです。  
+    サンプルの[アプリテンプレート（default.zip）](https://github.com/Kahiro-M/fileUploader4KntnFileSv/releases/)を利用した場合は、以下の項目をご利用の環境に合わせて変更してください。
     - 資料ナンバー（自動計算のジャンル、HP掲載、作成日、作成者部分）
     - 公開URL（自動計算のドメイン部分）
     - 原本URL（自動計算のドメイン部分）
