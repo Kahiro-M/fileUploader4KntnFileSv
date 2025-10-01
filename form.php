@@ -51,7 +51,7 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
     <hr>
 
     <?php foreach ($fields as $f): ?>
-      <ul class="field">
+      <ul class="field <?php if($f['hide'] === TRUE){ echo 'hide'; } ?>">
         <?php if($f['hide'] === FALSE){ ?>
         <li class="field-label">
           <span class="field-label-text"><?= htmlspecialchars($f['label']) ?></span>
