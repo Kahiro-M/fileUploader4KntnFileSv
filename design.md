@@ -1,6 +1,33 @@
 設計資料
 =========
 
+## システム構成図
+```mermaid
+flowchart LR
+    %% 設備
+    USR([ユーザー<br>（ブラウザ利用者）])
+    subgraph S[WEBサーバ]
+        FRM[form.php<br>ファイル選択と送信]
+        UP[upload.php<br>アップロード処理]
+        DL[download.php<br>ダウンロード処理]
+        FLSV[ファイル保存領域]
+    end
+    subgraph KNTN[kintone]
+        API[kintone REST API]
+        APP[kintone アプリ<br>ファイル情報 & ダウンロードURL]
+    end
+
+    %% 矢印
+    USR --- APP
+    USR --- FRM
+    FRM --- UP
+    UP --- API
+    UP --- FLSV
+    API --- APP
+    APP --- DL
+    DL --- FLSV
+```
+
 
 ## formからのアップロード
 
@@ -11,7 +38,7 @@ flowchart LR
     USR([ユーザー<br>（ブラウザ利用者）])
 
     %% システム
-    subgraph S[FileUploaderシステム]
+    subgraph S[WEBサーバ]
         FRM[form.php<br>ファイル選択と送信]
         UP[upload.php<br>アップロード処理]
     end
@@ -35,7 +62,7 @@ flowchart TD
     UP_UUID --> ADD_KNTN[addKintoneRecord <br>kintone REST API呼び出し]
     ADD_KNTN -->|成功| UP_SUC[登録成功レスポンス（JSON）]
     ADD_KNTN -->|失敗| UP_ERR[エラーレスポンス（JSON返却）]
-    UP_SUC --> G[ユーザーに成功メッセージ表示]
+    UP_SUC --> G[メッセージ表示]
     UP_ERR --> G
 ```
 
@@ -96,12 +123,12 @@ flowchart LR
     LST[list.php<br>（簡易一覧）]
 
     %% システム
-    subgraph S[FileUploaderシステム]
-        DL[download.php<br>（ファイルダウンロード処理）]
+    subgraph S[WEBサーバ]
+        DL[download.php<br>（ダウンロード処理）]
     end
 
     %% 外部システム（ファイル格納）
-    FS[ファイルサーバ<br>（uploadsディレクトリ）]
+    FS[ファイルサーバ<br>（ファイル保存領域）]
 
     %% 矢印
     USR --> KNTN
@@ -121,7 +148,6 @@ flowchart TD
     UP -->|正常| UP_UUID[HTTPヘッダ設定 & ファイル読み込み]
     UP -->|エラー| UP_ERR[エラーレスポンス（JSON or メッセージ）]
     UP_UUID --> ADD_KNTN[ファイルをダウンロード]
-    UP_ERR --> ADD_KNTN
 
 ```
 
@@ -131,18 +157,18 @@ sequenceDiagram
     participant User as ユーザー
     participant Kntn as kintone/list.php
     participant DL as download.php
-    participant kintone as kintone
-    participant FS as ファイルサーバ（uploads）
+    participant kintone as kintone API
+    participant FS as ファイルサーバ
 
     User ->> Kntn: レコード一覧参照
     Kntn -->> User: ダウンロードURL表示
     User ->> DL: GET /download.php?file=UUID
 
     DL ->> DL: URLパラメータ mode 取得
-    alt mode=org
-        DL ->> DL: $baseDir = UPLOAD_DIR_ORIGINAL
+    alt 原本
+        DL ->> DL: ファイルディレクトリ = 原本保存ディレクトリ
     else 公開 or 省略
-        DL ->> DL: $baseDir = UPLOAD_DIR_PUBLIC
+        DL ->> DL: ファイルディレクトリ = 公開ファイル保存ディレクトリ
     end
 
 
