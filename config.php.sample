@@ -111,7 +111,7 @@ define('POST_MAX_SIZE',ini_get('post_max_size'));
 define('MEMORY_LIMIT',ini_get('memory_limit'));
 
 // iframe埋め込みを許可するか
-define('ALLOW_IFRAME_EMBED', true);   // ← false にすると完全拒否
+define('ALLOW_IFRAME_EMBED', false);   // ← false にすると完全拒否
 
 // iframe埋め込みを許可するオリジン（許可する場合のみ有効）
 define('ALLOWED_IFRAME_ORIGINS', [
