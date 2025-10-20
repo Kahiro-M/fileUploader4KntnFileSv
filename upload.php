@@ -3,15 +3,44 @@ session_start();
 require_once "config.php";
 require_once "common.php";
 
+// UUIDv4生成
+function generateUuidV4(): string {
+    $data = random_bytes(16);
+    $data[6] = chr((ord($data[6]) & 0x0f) | 0x40);
+    $data[8] = chr((ord($data[8]) & 0x3f) | 0x80);
+    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+}
+$ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+$timestamp = date("Ymd_His");
+$uuid = generateUuidV4();
+$errFile = UPLOAD_DIR_CSV . "/err_{$timestamp}_{$ip}_{$uuid}.log";
+
 $uploadMaxFilesize = UPLOAD_MAX_FILESIZE;
 $postMaxSize = POST_MAX_SIZE;
 $memoryLimit = MEMORY_LIMIT;
 
+
 // CSRFチェック
 if (!isset($_POST['token'], $_SESSION['token']) || $_POST['token'] !== $_SESSION['token']) {
+    echo("<div class='dbg-msg' style='display:none;'>ファイル識別子 (UUIDv4): " . $uuid . "</div>");
+    
+    // error log 書き出し
+    file_put_contents($errFile, 'CSRFトークン不一致エラー'."\n", FILE_APPEND);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, 'UUID : '.$uuid."\n", FILE_APPEND);
+    file_put_contents($errFile, 'IP : '.$ip."\n", FILE_APPEND);
+    file_put_contents($errFile, 'DATETIME : '.$timestamp."\n", FILE_APPEND);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, '$_POST'."\n", FILE_APPEND);
+    logDump($_POST,$errFile);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, '$_SESSION'."\n", FILE_APPEND);
+    logDump($_SESSION,$errFile);
+
     echo("不正なリクエストです。<br>");
+    echo("エラーID：".$uuid."<br>");
     echo("アップロード画面で再読み込み、もしくは、データ容量が超過した可能性があります。<br>");
-    echo "<h2>再度ファイル登録を行ってください。<br>何度も発生する場合はこの画面のスクリーンショットを撮影して、システム担当者へ連絡してください。</h2>";
+    echo("<h2>再度ファイル登録を行ってください。<br>何度も発生する場合はこの画面のスクリーンショットを撮影して、システム担当者へ連絡してください。</h2>");
     echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');
     exit();
 }
@@ -72,21 +101,10 @@ if (!is_writable(UPLOAD_DIR_CSV_BOM)) {
 $uploadDirCsv = UPLOAD_DIR_CSV;
 $uploadDirCsvBom = UPLOAD_DIR_CSV_BOM;
 
-// UUIDv4生成
-function generateUuidV4(): string {
-    $data = random_bytes(16);
-    $data[6] = chr((ord($data[6]) & 0x0f) | 0x40);
-    $data[8] = chr((ord($data[8]) & 0x3f) | 0x80);
-    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-}
-
 // kintoneフィールド情報取得
 $fields = getKintoneFields();
 
-// ファイル名生成
-$ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-$timestamp = date("Ymd_His");
-$uuid = generateUuidV4();
+// ファイル
 echo("<div class='dbg-msg' style='display:none;'>ファイル識別子 (UUIDv4): " . $uuid . "</div>");
 $csvFileNoBOM = $uploadDirCsv . "/files_{$timestamp}_{$ip}_{$uuid}.csv";
 $csvFileBOM   = $uploadDirCsvBom . "/files_{$timestamp}_{$ip}_{$uuid}_bom.csv";
@@ -218,7 +236,35 @@ try {
     $result = addKintoneRecord(KINTONE_APP_ID, $record, KINTONE_API_TOKEN);
     echo "<div class='dbg-msg' style='display:none;'>登録成功: recordId=" . $result["id"]. "</div>";
 } catch (Exception $e) {
+    // error log 書き出し
+    file_put_contents($errFile, '登録エラー'."\n", FILE_APPEND);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, 'UUID : '.$uuid."\n", FILE_APPEND);
+    file_put_contents($errFile, 'IP : '.$ip."\n", FILE_APPEND);
+    file_put_contents($errFile, 'DATETIME : '.$timestamp."\n", FILE_APPEND);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, '$_POST'."\n", FILE_APPEND);
+    logDump($_POST,$errFile);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, '$_SESSION'."\n", FILE_APPEND);
+    logDump($_SESSION,$errFile);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, '$_FILES'."\n", FILE_APPEND);
+    logDump($_FILES,$errFile);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, 'kintoneフィールド情報($fields)'."\n", FILE_APPEND);
+    logDump($fields,$errFile);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, '登録CSVファイル名 ($csvFileBOM)'."\n", FILE_APPEND);
+    file_put_contents($errFile, $csvFileBOM."\n", FILE_APPEND);
+    file_put_contents($errFile, "\n============\n", FILE_APPEND);
+    file_put_contents($errFile, '登録ヘッダー ($header)'."\n", FILE_APPEND);
+    logDump($header,$errFile);
+    file_put_contents($errFile, '登録情報 ($row)'."\n", FILE_APPEND);
+    logDump($row,$errFile);
+
     echo "<h1>登録エラー: " . $e->getMessage()."</h1>";
+    echo("エラーID：".$uuid."<br>");
     echo "<h2>再度ファイル登録を行ってください。<br>何度も発生する場合はこの画面のスクリーンショットを撮影して、システム担当者へ連絡してください。</h2>";
     echo "<style>.dbg-msg { display:block!important; }</style>";
     echo('<h3><a href="form.php">ファイル登録画面へ戻る</a></h3>');

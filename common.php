@@ -321,4 +321,64 @@ function phpToJs($phpVar, $jsVarName) {
     echo "<script>const {$jsVarName} = {$json};</script>";
 }
 
+// 配列やオブジェクトなどをvar_dump風にログ出力する関数
+function logDump($data, $path = './debug.log', $append = true)
+{
+    // 出力内容を文字列として取得
+    $output = formatDump($data);
+
+    // タイムスタンプを付ける
+    $timestamp = '[' . date('Y-m-d H:i:s') . "]\n";
+    $log = $timestamp . $output . "\n\n";
+
+    // ファイルへ書き込み
+    file_put_contents($path, $log, $append ? FILE_APPEND : 0);
+}
+
+// var_dump風に再帰整形して文字列化
+function formatDump($data, $indent = 0)
+{
+    $spaces = str_repeat('  ', $indent);
+    $result = '';
+
+    if (is_array($data)) {
+        $result .= "array(" . count($data) . ") {\n";
+        foreach ($data as $key => $value) {
+            $result .= $spaces . "  [" . $key . "] => ";
+            if (is_array($value) || is_object($value)) {
+                $result .= formatDump($value, $indent + 1);
+            } else {
+                $result .= getValueStr($value) . "\n";
+            }
+        }
+        $result .= $spaces . "}\n";
+    } elseif (is_object($data)) {
+        $result .= "object(" . get_class($data) . ") {\n";
+        foreach (get_object_vars($data) as $key => $value) {
+            $result .= $spaces . "  [" . $key . "] => ";
+            if (is_array($value) || is_object($value)) {
+                $result .= formatDump($value, $indent + 1);
+            } else {
+                $result .= getValueStr($value) . "\n";
+            }
+        }
+        $result .= $spaces . "}\n";
+    } else {
+        $result .= getValueStr($data) . "\n";
+    }
+
+    return $result;
+}
+
+// 値の型に応じて出力形式を整える
+function getValueStr($value)
+{
+    if (is_null($value)) return "NULL";
+    if (is_bool($value)) return $value ? "bool(true)" : "bool(false)";
+    if (is_int($value)) return "int($value)";
+    if (is_float($value)) return "float($value)";
+    if (is_string($value)) return "string(" . strlen($value) . ") \"$value\"";
+    return gettype($value);
+}
+
 ?>
