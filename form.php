@@ -1,7 +1,27 @@
 <?php
-session_start();
 require_once "config.php";
 require_once "common.php";
+
+// iframe埋め込み
+if (ALLOW_IFRAME_EMBED) {
+    // オリジン配列をCSP形式に整形
+    $origins = implode(' ', ALLOWED_IFRAME_ORIGINS);
+
+    // frame-ancestorsヘッダを出力
+    header("Content-Security-Policy: frame-ancestors 'self' {$origins};");
+} else {
+    // iframe埋め込みを全面拒否
+    header("Content-Security-Policy: frame-ancestors 'none';");
+}
+
+// セッション設定（iframe運用想定）
+session_set_cookie_params([
+    'samesite' => 'None',
+    'secure'   => true,
+    'httponly' => true,
+]);
+
+session_start();
 
 // CSRFトークン生成
 if (empty($_SESSION['token'])) {

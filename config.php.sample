@@ -110,4 +110,11 @@ define('UPLOAD_MAX_FILESIZE',ini_get('upload_max_filesize'));
 define('POST_MAX_SIZE',ini_get('post_max_size'));
 define('MEMORY_LIMIT',ini_get('memory_limit'));
 
+// iframe埋め込みを許可するか
+define('ALLOW_IFRAME_EMBED', true);   // ← false にすると完全拒否
 
+// iframe埋め込みを許可するオリジン（許可する場合のみ有効）
+define('ALLOWED_IFRAME_ORIGINS', [
+    'https://example.com',
+    'https://dev.example.com' // ← 開発環境を追加する例
+]);
