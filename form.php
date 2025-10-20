@@ -22,6 +22,11 @@ session_set_cookie_params([
 ]);
 
 session_start();
+// 初回アクセス時のみID再発行
+if (empty($_SESSION['initialized'])) {
+    session_regenerate_id(true);
+    $_SESSION['initialized'] = true;
+}
 
 // CSRFトークン生成
 if (empty($_SESSION['token'])) {
