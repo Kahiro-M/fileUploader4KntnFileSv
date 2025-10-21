@@ -45,10 +45,12 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
   <meta name="robots" content="noindex, nofollow">
   <title><?= FORM_TITLE ?? 'kintone連携 | ファイルアップロードフォーム' ?></title>
   <link rel="stylesheet" href="./css/form.css">
+  <?php if(DEBUG_MODE){echo('<link rel="stylesheet" href="./css/dbg.css">');} ?>
   <?php phpToJs(EXIST_ORG_FILED_CODE, 'hasOrgFiledCode'); ?>
   <?php phpToJs(getKintoneFieldType($fields,EXIST_ORG_FILED_CODE), 'hasOrgFiledType'); ?>
 </head>
   <body>
+  <?php if(DEBUG_MODE){echo('<h1 style="color:red;">システムメンテナンス中<br>アップロードしないでください。</h1>');} ?>
   <h2><?= FORM_TITLE ?? 'kintone連携 ファイルアップロードフォーム' ?></h2>
   <?= FORM_MSG_HEADER ?>
   <form action="upload.php" method="post" enctype="multipart/form-data">

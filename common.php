@@ -329,7 +329,7 @@ function logDump($data, $path = './debug.log', $append = true)
 
     // タイムスタンプを付ける
     $timestamp = '[' . date('Y-m-d H:i:s') . "]\n";
-    $log = $timestamp . $output . "\n\n";
+    $log = $timestamp . $output . "\n";
 
     // ファイルへ書き込み
     file_put_contents($path, $log, $append ? FILE_APPEND : 0);

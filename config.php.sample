@@ -15,6 +15,22 @@ define('RELATIVE_DIR_ORIGINAL', '/../../org');
 define('UPLOAD_DIR_PUBLIC', '/path/to/pub');
 define('UPLOAD_DIR_ORIGINAL', '/path/to/org');
 
+// アップロード可能ファイル種類
+define('ALLOWED_FILE_TYPES', [
+    'pdf'  => 'application/pdf',
+    'doc'  => 'application/msword',
+    'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'xls'  => 'application/vnd.ms-excel',
+    'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'ppt'  => 'application/vnd.ms-powerpoint',
+    'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'jpg'  => 'image/jpeg',
+    'jpeg' => 'image/jpeg',
+    'png'  => 'image/png',
+    'gif'  => 'image/gif',
+    'bmp'  => 'image/bmp',
+]);
+
 // 除外フィールドタイプ・フィールドコード
 define('EXCLUDE_TYPE', [
     'RECORD_NUMBER',
