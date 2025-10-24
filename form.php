@@ -61,7 +61,7 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
       </li>
       :
       <li class="field-content">
-        <input type="file" id="public_file" name="public_file" required>
+        <input type="file" id="public_file" name="public_file" accept="<?= ALLOWED_FILE_EXTS ?>" required>
       </li>
     </ul>
     <ul class="field">
@@ -70,7 +70,7 @@ $fields = changeFieldOrder($fieldsOrgOrder,FIELD_CODE_DISPLAY_ORDER);
       </li>
       :
       <li class="field-content">
-        <input type="file" id="original_file" name="original_file">
+        <input type="file" id="original_file" name="original_file" accept="<?= ALLOWED_FILE_EXTS ?>">
       </li>
     </ul>
     <?= FORM_MSG_FILES ?>

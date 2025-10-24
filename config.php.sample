@@ -30,6 +30,7 @@ define('ALLOWED_FILE_TYPES', [
     'gif'  => 'image/gif',
     'bmp'  => 'image/bmp',
 ]);
+define('ALLOWED_FILE_EXTS', '.'.implode(',.', array_keys(ALLOWED_FILE_TYPES)));
 
 // 除外フィールドタイプ・フィールドコード
 define('EXCLUDE_TYPE', [
