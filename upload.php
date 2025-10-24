@@ -37,7 +37,6 @@ $memoryLimit = MEMORY_LIMIT;
 
 // CSRFチェック
 if (!isset($_POST['token'], $_SESSION['token']) || $_POST['token'] !== $_SESSION['token']) {
-    echo("<div class='dbg-msg' style='display:none;'>ファイル識別子 (UUIDv4): " . $uuid . "</div>");
     
     // error log 書き出し
     file_put_contents($errFile, 'CSRFトークン不一致エラー'."\n", FILE_APPEND);
@@ -228,13 +227,8 @@ $uploadDirCsvBom = UPLOAD_DIR_CSV_BOM;
 $fields = getKintoneFields();
 
 // ファイル
-echo("<div class='dbg-msg' style='display:none;'>ファイル識別子 (UUIDv4): " . $uuid . "</div>");
 $csvFileNoBOM = $uploadDirCsv . "/files_{$timestamp}_{$ip}_{$uuid}.csv";
 $csvFileBOM   = $uploadDirCsvBom . "/files_{$timestamp}_{$ip}_{$uuid}_bom.csv";
-
-echo("<div class='dbg-msg' style='display:none;'>POST: ");
-echo(var_dump($_POST));
-echo("</div>");
 
 // CSVデータ構築
 $header = [];
@@ -357,7 +351,7 @@ foreach ($checkboxBuffer as $field => $options) {
 
 try {
     $result = addKintoneRecord(KINTONE_APP_ID, $record, KINTONE_API_TOKEN);
-    echo "<div class='dbg-msg' style='display:none;'>登録成功: recordId=" . $result["id"]. "</div>";
+    echo "<div class='dbg-msg' style='display:none;'>登録成功</div>";
 } catch (Exception $e) {
     // error log 書き出し
     file_put_contents($errFile, '登録エラー'."\n", FILE_APPEND);
