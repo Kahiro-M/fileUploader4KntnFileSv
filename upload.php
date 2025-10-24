@@ -133,6 +133,11 @@ foreach ($fields as $field=>$label) {
     $fileError = $_FILES[$field]['error'];
     $fileSize  = $_FILES[$field]['size'];
 
+    // 未添付ならスキップ
+    if($fileSize === 0){
+        continue;
+    }
+
     $ext = strtolower(pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION));
     if (!in_array($ext, array_keys(ALLOWED_FILE_TYPES), true)) {
         // error log 書き出し
