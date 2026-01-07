@@ -43,6 +43,7 @@ define('EXCLUDE_TYPE', [
     'STATUS_ASSIGNEE',
     'CATEGORY',
     'GROUP',
+    'REFERENCE_TABLE',
 ]);
 
 define('EXCLUDE_FIELD_CODE', [
