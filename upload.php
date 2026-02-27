@@ -343,11 +343,7 @@ foreach ($header as $i => $fieldCode) {
     }
 
     // 通常フィールド処理
-    if (strpos($value, ",") !== false) {
-        $record[$fieldCode] = [ "value" => explode(",", $value) ];
-    } else {
-        $record[$fieldCode] = [ "value" => $value ];
-    }
+    $record[$fieldCode] = [ "value" => $value ];
 }
 // チェックボックス項目をまとめて追加
 foreach ($checkboxBuffer as $field => $options) {
