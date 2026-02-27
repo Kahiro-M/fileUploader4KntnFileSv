@@ -14,6 +14,8 @@ define('RELATIVE_DIR_PUBLIC', '/../../pub');
 define('RELATIVE_DIR_ORIGINAL', '/../../org');
 define('UPLOAD_DIR_PUBLIC', '/path/to/pub');
 define('UPLOAD_DIR_ORIGINAL', '/path/to/org');
+define('UPLOAD_DBG_DIR_PUBLIC', '/path/to/dbg/pub');
+define('UPLOAD_DBG_DIR_ORIGINAL', '/path/to/dbg/org');
 
 // アップロード可能ファイル種類
 define('ALLOWED_FILE_TYPES', [

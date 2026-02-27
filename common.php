@@ -1,7 +1,10 @@
 <?php
 // デバッグ用フィールド情報表示
-function dbg_dump($fields, $title = ''){
-    if(defined('DEBUG_MODE') == TRUE && DEBUG_MODE == TRUE){
+function dbg_dump($fields, $forceMode=FALSE, $title = ''){
+    if(
+        (defined('DEBUG_MODE') == TRUE && DEBUG_MODE == TRUE)
+        || $forceMode == TRUE
+    ){
         echo("<pre>");
         echo("[".$title."]\n");
         var_dump($fields);
