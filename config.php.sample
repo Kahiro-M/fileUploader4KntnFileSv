@@ -33,6 +33,8 @@ define('ALLOWED_FILE_TYPES', [
     'bmp'  => 'image/bmp',
 ]);
 define('ALLOWED_FILE_EXTS', '.'.implode(',.', array_keys(ALLOWED_FILE_TYPES)));
+define('ALLOWED_FILE_EXT_TEXT', implode(' / ', array_keys(ALLOWED_FILE_TYPES)));
+$_ = function($s){return $s;};//配列をテキストに展開するための関数
 
 // 除外フィールドタイプ・フィールドコード
 define('EXCLUDE_TYPE', [
@@ -118,6 +120,7 @@ define('FORM_MSG_HEADER', <<< 'FORM_MSG_HEADER_STR'
 FORM_MSG_HEADER_STR
 );
 define('FORM_MSG_FILES', <<< 'FORM_MSG_FILES_STR'
+登録可能なファイルは {$_(ALLOWED_FILE_EXT_TEXT)} です。<br>
 ファイルメッセージはここに表示される。
 FORM_MSG_FILES_STR
 );
