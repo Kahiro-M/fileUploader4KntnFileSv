@@ -29,3 +29,4 @@ config*.php
 *.csv
 *.zip
 .htaccess
+del_cmd.php
