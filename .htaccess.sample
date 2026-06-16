@@ -1,0 +1,25 @@
+# FILEアップロードサイズ
+php_value upload_max_filesize 20M
+
+# 余裕を持たせて40MB+α
+php_value post_max_size 50M
+
+# 処理によっては256MでもOK
+php_value memory_limit 128M
+
+
+# authenticate(Basic)
+AuthUserFile /path/to/kntn.htpasswd
+AuthGroupFile /dev/null
+
+AuthName "ID & PW"
+AuthType Basic
+require valid-user
+# IP制限でOKはBasic認証をスキップ
+Satisfy any
+# IP制限でOKでもBasic認証を要求
+#Satisfy all
+order deny,allow
+deny from all
+# sample
+allow from xxx.xxx.xxx.xxx

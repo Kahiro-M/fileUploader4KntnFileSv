@@ -28,3 +28,4 @@ config*.php
 
 *.csv
 *.zip
+.htaccess
